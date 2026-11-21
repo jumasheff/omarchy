@@ -423,6 +423,37 @@
   "sshd.keyPaste": "Ачкычты кол менен чаптоо",
   "sshd.publicKeyPrompt": "Ачык ачкыч> ",
   "sshd.removeAuthorizedKeys": "Бардык уруксат берилген SSH ачкычтары да өчүрүлсүнбү (%1)?",
+  "sudoPasswordless.aborted": "Жокко чыгарылды. Эч нерсе өзгөргөн жок.",
+  "sudoPasswordless.alreadyDisabled": "Сырсөзсүз sudo өчүрүлгөн.",
+  "sudoPasswordless.chooseHint": "↑↓ тандоо · Enter ырастоо · Esc жокко чыгаруу",
+  "sudoPasswordless.confirmPermanent": "Сырсөзсүз sudo дайыма иштесинби? Бул коопсуздук үчүн чоң коркунуч!",
+  "sudoPasswordless.confirmTemporary": {
+    "one": "Сырсөзсүз sudo %1 мүнөт иштесинби? Бул коопсуздук үчүн чоң коркунуч!",
+    "other": "Сырсөзсүз sudo %1 мүнөт иштесинби? Бул коопсуздук үчүн чоң коркунуч!"
+  },
+  "sudoPasswordless.disabled": "Сырсөзсүз sudo өчүрүлдү. Сакталган уруксаттын мөөнөтү бүткөндө sudo кайра сырсөз сурайт.",
+  "sudoPasswordless.disableHint": "Өчүрүү үчүн ушул буйрукту кайра иштетиңиз.",
+  "sudoPasswordless.durationPrompt": "Сырсөзсүз sudo канча убакытка иштесин?",
+  "sudoPasswordless.enabledPermanent": "Сырсөзсүз sudo дайыма иштей тургандай күйгүзүлдү. Өчүрүү үчүн ушул буйрукту кайра иштетиңиз.",
+  "sudoPasswordless.enabledTemporary": {
+    "one": "Сырсөзсүз sudo күйгүзүлдү. %1 мүнөттөн кийин автоматтык өчөт.",
+    "other": "Сырсөзсүз sudo күйгүзүлдү. %1 мүнөттөн кийин автоматтык өчөт."
+  },
+  "sudoPasswordless.expires": {
+    "one": "Сырсөзсүз sudo %1 мүнөттөн кийин автоматтык өчөт,\nкомпьютер ошол мөөнөткө чейин кайра жүктөлсө да.",
+    "other": "Сырсөзсүз sudo %1 мүнөттөн кийин автоматтык өчөт,\nкомпьютер ошол мөөнөткө чейин кайра жүктөлсө да."
+  },
+  "sudoPasswordless.fifteenMinutes": "15 мүнөт",
+  "sudoPasswordless.oneDay": "1 күн",
+  "sudoPasswordless.oneHour": "1 саат",
+  "sudoPasswordless.permanently": "Дайыма",
+  "sudoPasswordless.persists": "Сырсөзсүз sudo кайра жүктөлгөндөн кийин да,\nөзүңүз өчүрмөйүнчө иштей берет.",
+  "sudoPasswordless.risk": "Бул sudo буйруктарын аткарган AI агенттерине ыңгайлуу,\nбирок тутумуңуздун коопсуздугун кыйла төмөндөтөт.\nАккаунтуңузга кирген ар ким же ар нерсе толук root укугун алат.",
+  "sudoPasswordless.warningPermanent": "⚠️ ЭСКЕРТҮҮ: Сиздин атыңыздан иштеген КААЛАГАН процесс\nКААЛАГАН буйрукту root укугу менен сырсөзсүз\nчексиз мөөнөткө аткара алат.",
+  "sudoPasswordless.warningTemporary": {
+    "one": "⚠️ ЭСКЕРТҮҮ: %1 мүнөт бою сиздин атыңыздан иштеген\nКААЛАГАН процесс КААЛАГАН буйрукту root укугу менен\nсырсөзсүз аткара алат.",
+    "other": "⚠️ ЭСКЕРТҮҮ: %1 мүнөт бою сиздин атыңыздан иштеген\nКААЛАГАН процесс КААЛАГАН буйрукту root укугу менен\nсырсөзсүз аткара алат."
+  },
   "suspend.availableInMenu": "Уйку режими эми тутум менюсунда бар",
   "suspend.removedFromMenu": "Уйку режими тутум менюсунан алынды",
   "suspend.turnedOffOnMachine": "Бул компьютерде уйку режими өчүрүлгөн",

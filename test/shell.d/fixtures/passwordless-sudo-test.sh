@@ -16,6 +16,7 @@ cleanup_grant_fixture() {
 }
 trap cleanup_grant_fixture EXIT
 export TEST_GRANT_ROOT=$test_tmp
+export PATH="$ROOT/bin:$PATH"
 mkdir -p "$test_tmp/bin" "$test_tmp/etc/sudoers.d" "$test_tmp/etc/tmpfiles.d" "$test_tmp/run/lock" "$test_tmp/var/lib" "$test_tmp/hooks"
 cat >"$test_tmp/bin/mock" <<'STUB'
 #!/bin/bash
@@ -88,7 +89,26 @@ case "$name" in
   gum)
     if [[ $1 == choose ]]; then
       [[ ${TEST_CHOICE_CANCEL:-0} != 1 ]] || exit 130
-      printf '%s\n' "${TEST_CHOICE:-15 minutes}"
+      delimiter=""
+      delimiter_next=0
+      for option in "$@"; do
+        if (( delimiter_next )); then
+          delimiter=$option
+          delimiter_next=0
+        elif [[ $option == "--label-delimiter" ]]; then
+          delimiter_next=1
+        fi
+      done
+      for option in "$@"; do
+        if [[ -n $delimiter && $option == *"$delimiter"* && ${option%%"$delimiter"*} == "${TEST_CHOICE:-15 minutes}" ]]; then
+          printf '%s\n' "${option#*"$delimiter"}"
+          exit 0
+        elif [[ $option == "${TEST_CHOICE:-15 minutes}" ]]; then
+          printf '%s\n' "$option"
+          exit 0
+        fi
+      done
+      exit 130
     else
       exit "${TEST_CONFIRM_STATUS:-1}"
     fi
@@ -101,6 +121,11 @@ for name in stat chown install rm mv systemd-run systemctl date getent sudo gum 
   ln -s mock "$test_tmp/bin/$name"
 done
 
+# The command reads its text from the root around its bin/, so the rewritten
+# copies live in a checkout-shaped root that shares this checkout's catalogs.
+mkdir -p "$test_tmp/omarchy/bin"
+ln -s "$ROOT/default" "$test_tmp/omarchy/default"
+ln -s "$ROOT/bin/omarchy-i18n" "$test_tmp/omarchy/bin/omarchy-i18n"
 python3 - "$ROOT" "$test_tmp" <<'PY'
 from pathlib import Path
 import sys
@@ -113,8 +138,9 @@ for name in ('omarchy-sudo-passwordless', 'omarchy-security-functions'):
     text = text.replace('((EUID == 0))', '((${TEST_EUID:-1} == 0))')
     for command in ('stat', 'chown', 'install', 'rm', 'mv', 'systemd-run', 'systemctl', 'date', 'getent', 'sudo', 'gum', 'omarchy-shell'):
         text = text.replace('/usr/bin/' + command, str(temp/'bin'/command))
-    (temp/name).write_text(text)
-    (temp/name).chmod(0o755)
+    (temp/'omarchy'/'bin'/name).write_text(text)
+    (temp/'omarchy'/'bin'/name).chmod(0o755)
+    (temp/name).symlink_to(temp/'omarchy'/'bin'/name)
 PY
 library="$test_tmp/functions.sh"
 {

@@ -387,6 +387,37 @@
   "sshd.keyPaste": "Paste key manually",
   "sshd.publicKeyPrompt": "Public key> ",
   "sshd.removeAuthorizedKeys": "Also remove all authorized SSH keys (%1)?",
+  "sudoPasswordless.aborted": "Aborted. No changes made.",
+  "sudoPasswordless.alreadyDisabled": "Passwordless sudo is already DISABLED.",
+  "sudoPasswordless.chooseHint": "↑↓ navigate · Enter select · Esc cancel",
+  "sudoPasswordless.confirmPermanent": "Enable passwordless sudo permanently? This is a significant security risk!",
+  "sudoPasswordless.confirmTemporary": {
+    "one": "Enable passwordless sudo for %1 minute? This is a significant security risk!",
+    "other": "Enable passwordless sudo for %1 minutes? This is a significant security risk!"
+  },
+  "sudoPasswordless.disabled": "Passwordless sudo has been DISABLED. Sudo will require a password again once any cached authorization expires.",
+  "sudoPasswordless.disableHint": "Run this command again to disable it.",
+  "sudoPasswordless.durationPrompt": "How long should passwordless sudo stay enabled?",
+  "sudoPasswordless.enabledPermanent": "Passwordless sudo has been ENABLED permanently. Run this command again to disable it.",
+  "sudoPasswordless.enabledTemporary": {
+    "one": "Passwordless sudo has been ENABLED. It will automatically disable in %1 minute.",
+    "other": "Passwordless sudo has been ENABLED. It will automatically disable in %1 minutes."
+  },
+  "sudoPasswordless.expires": {
+    "one": "Passwordless sudo will automatically disable after %1 minute,\nincluding if the machine reboots before the deadline.",
+    "other": "Passwordless sudo will automatically disable after %1 minutes,\nincluding if the machine reboots before the deadline."
+  },
+  "sudoPasswordless.fifteenMinutes": "15 minutes",
+  "sudoPasswordless.oneDay": "1 Day",
+  "sudoPasswordless.oneHour": "1 Hour",
+  "sudoPasswordless.permanently": "Permanently",
+  "sudoPasswordless.persists": "Passwordless sudo will remain enabled across reboots until you disable it.",
+  "sudoPasswordless.risk": "This is useful for AI agents that need to run sudo commands,\nbut it significantly weakens the security of your system.\nAnyone or anything with access to your user account gets full root.",
+  "sudoPasswordless.warningPermanent": "⚠️ WARNING: This will allow ANY process running as your user to\nexecute ANY command as root WITHOUT a password permanently.",
+  "sudoPasswordless.warningTemporary": {
+    "one": "⚠️ WARNING: This will allow ANY process running as your user to\nexecute ANY command as root WITHOUT a password for %1 minute.",
+    "other": "⚠️ WARNING: This will allow ANY process running as your user to\nexecute ANY command as root WITHOUT a password for %1 minutes."
+  },
   "suspend.availableInMenu": "Suspend now available in system menu",
   "suspend.removedFromMenu": "Suspend removed from system menu",
   "suspend.turnedOffOnMachine": "Suspend is turned off on this machine",

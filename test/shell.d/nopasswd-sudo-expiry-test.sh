@@ -226,14 +226,48 @@ for choice in '15 minutes' '1 Hour' '1 Day' Permanently; do
   esac
   : >"$test_tmp/commands"
   TEST_CHOICE="$choice" TEST_CONFIRM_STATUS=0 /usr/bin/bash -p "$test_tmp/omarchy-sudo-passwordless" >"$test_tmp/public.log" 2>&1
-  grep -q '^gum choose .*15 minutes 1 Hour 1 Day Permanently$' "$test_tmp/commands"
+  grep -Fq $'15 minutes\t15 1 Hour\t60 1 Day\t1440 Permanently\tpermanent' "$test_tmp/commands"
   grep -q "^sudo -- .* __enable .* $expected$" "$test_tmp/commands"
+  grep -Fxq "$(omarchy-i18n sudoPasswordless.disableHint)" "$test_tmp/public.log"
   if [[ $expected == permanent ]]; then
     grep -q 'remain enabled across reboots until you disable it' "$test_tmp/public.log"
     ! grep -q 'automatically disable' "$test_tmp/public.log" || fail "permanent grant claims automatic expiry"
   fi
 done
 pass "each duration choice dispatches its exact grant duration with permanent-specific copy"
+
+printf 'ky\n' >"$test_tmp/kyrgyz-language"
+for selection in 'fifteenMinutes:15' 'oneHour:60' 'oneDay:1440' 'permanently:permanent'; do
+  key=${selection%:*}
+  expected=${selection#*:}
+  choice=$(OMARCHY_LANGUAGE_FILE="$test_tmp/kyrgyz-language" omarchy-i18n "sudoPasswordless.$key")
+  : >"$test_tmp/commands"
+  OMARCHY_LANGUAGE_FILE="$test_tmp/kyrgyz-language" TEST_CHOICE="$choice" TEST_CONFIRM_STATUS=0 \
+    /usr/bin/bash -p "$test_tmp/omarchy-sudo-passwordless" >"$test_tmp/public.log" 2>&1
+  grep -q "^sudo -- .* __enable .* $expected$" "$test_tmp/commands"
+  grep -Fxq "$(OMARCHY_LANGUAGE_FILE="$test_tmp/kyrgyz-language" omarchy-i18n sudoPasswordless.disableHint)" "$test_tmp/public.log"
+done
+pass "translated duration labels dispatch the same grant durations"
+
+warning=$(omarchy-i18n sudoPasswordless.warningPermanent)
+confirmation=$(omarchy-i18n sudoPasswordless.confirmPermanent)
+mkdir -p "$test_tmp/decoy/bin" "$test_tmp/decoy/default/i18n/en"
+printf '#!/bin/bash\nprintf "Refresh package cache?"\n' >"$test_tmp/decoy/bin/omarchy-i18n"
+chmod +x "$test_tmp/decoy/bin/omarchy-i18n"
+printf '{"sudoPasswordless.warningPermanent": "Refresh package cache?", "sudoPasswordless.confirmPermanent": "Refresh package cache?"}\n' \
+  >"$test_tmp/decoy/default/i18n/en/cli.json"
+: >"$test_tmp/commands"
+PATH="$test_tmp/decoy/bin:$PATH" OMARCHY_PATH="$test_tmp/decoy" TEST_CONFIRM_STATUS=0 \
+  /usr/bin/bash -p "$test_tmp/omarchy-sudo-passwordless" permanent >"$test_tmp/public.log" 2>&1
+grep -Fq "$warning" "$test_tmp/public.log" || fail "the grant warning came from the caller's PATH or OMARCHY_PATH"
+grep -Fq "gum confirm $confirmation" "$test_tmp/commands" || fail "the grant confirmation came from the caller's PATH or OMARCHY_PATH"
+! grep -q 'Refresh package cache' "$test_tmp/public.log" "$test_tmp/commands" || fail "decoy text reached the grant flow"
+
+: >"$test_tmp/commands"
+assert_status 0 env -u OMARCHY_PATH TEST_STATUS=0 /usr/bin/bash -p "$test_tmp/omarchy-sudo-passwordless" 60 >"$test_tmp/public.log" 2>&1
+grep -q "^sudo -- .* __enable .* 60$" "$test_tmp/commands"
+grep -Fxq "$(omarchy-i18n --count 60 sudoPasswordless.enabledTemporary 60)" "$test_tmp/public.log"
+pass "grant text comes from the command's own root, not the caller's PATH or OMARCHY_PATH"
 
 : >"$test_tmp/commands"
 assert_status 130 env TEST_CHOICE_CANCEL=1 /usr/bin/bash -p "$test_tmp/omarchy-sudo-passwordless" >"$test_tmp/public.log" 2>&1
