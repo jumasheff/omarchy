@@ -9,11 +9,13 @@ set -e
 # sudoless Docker is on for the account even though the running session still
 # needs a prompt, and this command is what turns it back off.
 if omarchy-sudo-docker --configured; then
-  echo "Sudoless Docker is not enabled: $USER is not in the docker group."
+  omarchy-i18n docker.notEnabled "$USER"
+  echo ""
   exit 0
 fi
 
-echo "Removing $USER from the docker group..."
+omarchy-i18n docker.removingFromGroup "$USER"
+echo ""
 sudo gpasswd -d "$USER" docker >/dev/null
 
 # Group membership is only re-read by a fresh session, and in practice logging
@@ -23,12 +25,10 @@ sudo gpasswd -d "$USER" docker >/dev/null
 omarchy-state set reboot-required
 
 echo ""
-echo "Sudoless Docker DISABLED. Docker access goes through a polkit/sudo prompt"
-echo "again: the Docker TUI (Super + Shift + D) and the Windows VM ask when they"
-echo "need it, and the plain 'docker' CLI runs under sudo. It takes effect after a reboot."
-echo ""
+omarchy-i18n docker.disabled
+printf '\n\n'
 # The migration reuses this command during 'omarchy update' and defers the
 # reboot to omarchy-update-restart, so it doesn't cut the update short.
-if [[ -z ${OMARCHY_DEFER_REBOOT:-} ]] && gum confirm --affirmative "$(omarchy-i18n common.yes)" --negative "$(omarchy-i18n common.no)" "$(omarchy-i18n docker.rebootToApply)"; then
+if [[ -z ${OMARCHY_DEFER_REBOOT:-} ]] && gum confirm --no-show-help --affirmative "$(omarchy-i18n common.yes)" --negative "$(omarchy-i18n common.no)" "$(omarchy-i18n docker.rebootToApply)"; then
   omarchy-system reboot
 fi
