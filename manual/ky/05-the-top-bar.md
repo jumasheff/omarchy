@@ -123,7 +123,7 @@ omarchy plugin disable omarchy.weather
   "version": 1,
   "bar": {
     "position": "top",
-    "background": "opaque",
+    "background": "none",
     "layout": {
       "left": [{ "id": "omarchy.menu" }, { "id": "omarchy.workspaces" }],
       "centerBegin": [{ "id": "omarchy.indicators" }],
