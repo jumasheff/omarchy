@@ -66,18 +66,6 @@
   "learn.hyprland": {
     "label": "Hyprland"
   },
-  "learn.arch": {
-    "label": "Arch"
-  },
-  "learn.neovim": {
-    "label": "Neovim"
-  },
-  "learn.bash": {
-    "label": "Bash"
-  },
-  "learn.tmux-keybindings": {
-    "label": "Tmux"
-  },
   "learn.herdr-keybindings": {
     "label": "Herdr"
   },
@@ -255,12 +243,6 @@
   "appearance.dock": {
     "label": "Док"
   },
-  "appearance.dock.autohide": {
-    "label": "Докту автоматтык жашыруу"
-  },
-  "appearance.dock.always-on": {
-    "label": "Докту дайыма көрсөтүү"
-  },
   "appearance.dock.position": {
     "label": "Доктун жайгашуусу"
   },
@@ -294,9 +276,6 @@
   },
   "appearance.animations-off": {
     "label": "Анимацияларды өчүрүү"
-  },
-  "appearance.unlock": {
-    "label": "Кулпуну ачуу"
   },
   "trigger.toggle": {
     "label": "Которуу"
@@ -392,16 +371,18 @@
     "label": "Ноутбуктун экранын өчүрүү"
   },
   "trigger.hardware.mirror-display-on": {
-    "label": "Экранды кайталоону күйгүзүү"
+    "label": "Экранды кайталоо күйүк"
   },
   "trigger.hardware.mirror-display-off": {
-    "label": "Экранды кайталоону өчүрүү"
+    "label": "Экранды кайталоо өчүк"
   },
   "trigger.hardware.hybrid-gpu-on": {
-    "label": "Гибриддик GPU режимине өтүү"
+    "label": "Өзүнчө GPU'га өтүү",
+    "description": "Гибриддик өзүнчө GPU күйгүзүү"
   },
   "trigger.hardware.hybrid-gpu-off": {
-    "label": "Камтылган GPU режимине өтүү"
+    "label": "Камтылган GPU'га өтүү",
+    "description": "Камтылган GPU гана колдонуу"
   },
   "trigger.hardware.touchpad-on": {
     "label": "Сенсордук тактаны күйгүзүү"
@@ -1185,9 +1166,6 @@
   "update.config.hyprsunset": {
     "label": "Hyprsunset"
   },
-  "update.config.plymouth": {
-    "label": "Plymouth"
-  },
   "update.config.tmux": {
     "label": "Tmux"
   },
@@ -1445,5 +1423,49 @@
   },
   "remove.ai.desktop.t3-code": {
     "label": "T3 Code"
+  },
+  "appearance.dock.floating-only": {
+    "label": "Док эркин иш мейкиндигинде гана"
+  },
+  "appearance.dock.tiling": {
+    "label": "Док тизүү иш мейкиндигинде"
+  },
+  "appearance.dock.visibility.always": {
+    "label": "Дайыма көрүнөт"
+  },
+  "appearance.dock.visibility.first-app": {
+    "label": "Биринчи тиркеме жашырат"
+  },
+  "appearance.dock.visibility.hidden": {
+    "label": "Дайыма жашыруун"
+  },
+  "appearance.dock.visibility": {
+    "label": "Доктун көрүнүшү"
+  },
+  "install.browser.ladybird": {
+    "label": "Ladybird"
+  },
+  "install.gaming.tools": {
+    "description": "MangoHud, Gamescope, GameMode",
+    "label": "Оюн куралдары"
+  },
+  "remove.browser.ladybird": {
+    "label": "Ladybird"
+  },
+  "remove.gaming.tools": {
+    "description": "MangoHud, Gamescope, GameMode",
+    "label": "Оюн куралдары"
+  },
+  "setup.default.browser.ladybird": {
+    "label": "Ladybird"
+  },
+  "setup.security.passwordless-login": {
+    "label": "Сырсөзсүз кирүү"
+  },
+  "system.snapshots": {
+    "label": "Көз ирмемдик көчүрмөлөр"
+  },
+  "system.snapshots.restore": {
+    "label": "Бул көчүрмөнү калыбына келтирүү"
   }
 }
