@@ -341,22 +341,29 @@ HOME="$TMPDIR/home" OMARCHY_PATH="$ROOT" omarchy-bar transparent true >/dev/null
 HOME="$TMPDIR/home" OMARCHY_PATH="$ROOT" omarchy-bar transparent toggle >/dev/null
 [[ $(bar_background) == "opaque" ]] || fail "toggling transparency off makes the bar opaque"
 # A shell.json from before background says transparent, which reads as none
-# and is dropped once a background is set.
+# when true and opaque when false, and is dropped once a background is set.
+# Omitting both falls back to none.
 jq '.bar.transparent = true | del(.bar.background)' "$TMPDIR/home/.config/omarchy/shell.json" >"$TMPDIR/legacy.json" &&
   mv "$TMPDIR/legacy.json" "$TMPDIR/home/.config/omarchy/shell.json"
 [[ $(bar_background) == "none" ]] || fail "an older transparent bar reads as no background"
+jq '.bar.transparent = false | del(.bar.background)' "$TMPDIR/home/.config/omarchy/shell.json" >"$TMPDIR/legacy.json" &&
+  mv "$TMPDIR/legacy.json" "$TMPDIR/home/.config/omarchy/shell.json"
+[[ $(bar_background) == "opaque" ]] || fail "an older opaque bar reads as opaque"
+jq 'del(.bar.background, .bar.transparent)' "$TMPDIR/home/.config/omarchy/shell.json" >"$TMPDIR/legacy.json" &&
+  mv "$TMPDIR/legacy.json" "$TMPDIR/home/.config/omarchy/shell.json"
+[[ $(bar_background) == "none" ]] || fail "a bar without a background key defaults to none"
 bar_background glassy >/dev/null
 jq -e '.bar.background == "glassy" and (.bar | has("transparent") | not)' "$TMPDIR/home/.config/omarchy/shell.json" >/dev/null ||
   fail "setting a background drops the older transparent flag"
 pass "the older transparent form still sets and reads as the bar background"
 
-# Restoring the default bar also restores its opaque background, and the blur
+# Restoring the default bar also restores its clear background, and the blur
 # behind a glassy one goes with it.
 bar_background glassy >/dev/null
 [[ -f $glass_toggle ]] || fail "a glassy bar has its blur on before defaults"
 HOME="$TMPDIR/home" OMARCHY_PATH="$ROOT" omarchy-bar defaults >/dev/null
-[[ $(bar_background) == "opaque" && ! -f $glass_toggle ]] || fail "omarchy bar defaults turns a glassy bar's blur off"
-pass "restoring the default bar turns a glassy bar's blur off"
+[[ $(bar_background) == "none" && ! -f $glass_toggle ]] || fail "omarchy bar defaults restores the clear background and turns a glassy bar's blur off"
+pass "restoring the default bar restores the clear background and turns a glassy bar's blur off"
 
 # A background set by editing shell.json gets its blur when the shell syncs it.
 jq '.bar.background = "glassy"' "$TMPDIR/home/.config/omarchy/shell.json" >"$TMPDIR/edited.json" &&

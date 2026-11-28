@@ -48,7 +48,7 @@ Item {
   property string omarchyConfigDir: home + "/.config/omarchy"
   property var fallbackBarConfig: ({
     position: "top",
-    background: "opaque",
+    background: "none",
     layout: { left: [], centerBegin: [], center: [], centerEnd: [], right: [] }
   })
   property var layoutConfig: fallbackBarConfig.layout
@@ -789,7 +789,7 @@ Item {
     position = normalizePosition(config.position)
     // opaque, glassy or none; a config from before background says
     // transparent instead.
-    var look = config.background || (config.transparent === true ? "none" : "opaque")
+    var look = config.background || (config.transparent === false ? "opaque" : "none")
     setRequestedTransparency(look === "none")
     // A bar going clear waits for its text color before dropping its
     // background, so a glassy one stays glassy until then rather than
